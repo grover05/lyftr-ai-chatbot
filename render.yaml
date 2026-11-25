@@ -1,0 +1,41 @@
+services:
+  # Backend FastAPI Service (Docker with Persistent Disk)
+  - type: web
+    name: lyftr-ai-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: starter
+    healthCheckPath: /health
+    disk:
+      name: sqlite-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:////data/app.db
+      - key: ALLOWED_ORIGINS
+        value: https://lyftr-ai-frontend.vercel.app,http://localhost:3000
+      - key: ENABLE_FAILURE_SIMULATION
+        value: "true"
+      - key: MODEL_NAME
+        value: gemini/gemini-2.0-flash
+      - key: LITELLM_CACHE_TYPE
+        value: disk
+      - key: LLM_API_KEYS
+        sync: false # Set securely in dashboard
+
+  # Frontend React Static Site
+  - type: web
+    name: lyftr-ai-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false # Set to backend URL
