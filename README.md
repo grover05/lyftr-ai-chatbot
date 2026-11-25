@@ -6,6 +6,7 @@ Production-grade full-stack AI chatbot built with **React**, **TypeScript**, **V
 
 ## 1. Live URLs
 
+- **GitHub Public Repository**: https://github.com/grover05/lyftr-ai-chatbot
 - **Frontend Application**: `https://lyftr-ai-frontend.vercel.app` *(Pending live deployment authorization)*
 - **Backend API Base**: `https://lyftr-ai-backend.railway.app` *(Pending live deployment authorization)*
 - **Health Check Endpoint**: `https://lyftr-ai-backend.railway.app/health` *(Pending live deployment authorization)*
